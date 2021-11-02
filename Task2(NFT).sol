@@ -3,31 +3,20 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract DonateAndTakeNFT is ERC721, Ownable {
-    
-    //address public minter = address(this);
-    address public minter;
-    
-    using Counters for Counters.Counter;
-    Counters.Counter private _tokenIdCounter;
+    uint256 public tokenCounter;
 
     constructor() ERC721("Gift NTF", "DNTF") {}
 
-    function mintNFT(address to)
+    function mint(address to)
         public returns (uint256)
     {
-        _tokenIdCounter.increment();
-        _safeMint(to, _tokenIdCounter.current());
-
-        return _tokenIdCounter.current();
+        uint256 newItemId = tokenCounter;
+        tokenCounter = tokenCounter + 1;
+        _mint(to, newItemId);
+        return newItemId;
     }
-    
-    function setMinter() external {
-        minter = address(this);
-    }
-    
     
 }

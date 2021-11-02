@@ -1,9 +1,11 @@
+
+
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 
 import "@openzeppelin/contracts/access/Ownable.sol"; 
-import "./NFT.sol";
+import "./createNFT2.sol";
 
 
 contract Donation is Ownable {
@@ -11,8 +13,7 @@ contract Donation is Ownable {
     DonateAndTakeNFT test;
     
     address public immutable ADMIN;
-   
-    address minter1;
+    address contractAddress;
     
     struct Campaign {               // grouped attributes
         string name;
@@ -26,11 +27,13 @@ contract Donation is Ownable {
     
     mapping(uint => Campaign) public campaigns;        //mapping from uint to Campaign attributes (id to Campaign)
     mapping(address => bool) public ownerDonated;       // mapping from address to bool (address - true or false)
+    uint256 campaignIndex = 0;
     
-    
-    function setAddress(address _address) onlyAdmin public {
-        test = DonateAndTakeNFT(_address);
+  
+    function setAddress(address _address) public onlyAdmin {
+        contractAddress = _address;
     }
+
     
     constructor() {
         ADMIN = payable(msg.sender);        
@@ -44,14 +47,15 @@ contract Donation is Ownable {
     
     // Create campaigns (only Admin can create campaigns)
     function createCampaign(
-        uint _index, string memory _name, string memory _description, 
+        string memory _name, string memory _description, 
         uint _duration, uint _goal
         ) public onlyAdmin {
             
             uint raised = 0;
             bool completed = false;
+            campaignIndex += 1;
             
-            campaigns[_index] = Campaign(_name, _description, _duration + block.timestamp, _goal, raised, completed);
+            campaigns[campaignIndex] = Campaign(_name, _description, _duration + block.timestamp, _goal, raised, completed);
             
         }
         
@@ -74,11 +78,8 @@ contract Donation is Ownable {
         
         if (!ownerDonated[msg.sender]){                                                         //Donator will get NFT as gift first time only
             ownerDonated[msg.sender] = true;
-            minter1 = test.minter();
-           // minter1 = 0xd457540c3f08f7F759206B5eA9a4cBa321dE60DC;                             //Calling other contracts( NFT_ERC721.sol 
-            DonateAndTakeNFT (minter1).mintNFT(msg.sender);
+           // minter1 = 0xd457540c3f08f7F759206B5eA9a4cBa321dE60DC;                                                                                   //Calling other contracts( NFT_ERC721.sol 
+            DonateAndTakeNFT (contractAddress).mint(msg.sender);
         }
-
     }
-    
 }

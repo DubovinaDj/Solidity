@@ -6,6 +6,8 @@ Donacije se prihvataju samo u nativnom coinu.
 Deployovati smart contract na testnet po izboru (Rinkeby, Ropsten, Kovan, Goerli) i verifikovati isti na Etherscanu.
 */
 
+https://ropsten.etherscan.io/address/0x1677d3d78cc7f8f29276d9d663e5eecd71d4e441#code
+
 
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;

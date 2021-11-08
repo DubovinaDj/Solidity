@@ -1,3 +1,2 @@
 # Solidity
 
-Vezba

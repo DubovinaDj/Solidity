@@ -1,10 +1,10 @@
-'''
+/*
 Napisati smart contract za platformu za donacije koristeci Remix IDE. 
 Administrator ima mogucnost da kreira nove kampanje. 
 Svaka kampanja ima naziv, opis, vremenski i novcani cilj. 
 Donacije se prihvataju samo u nativnom coinu. 
 Deployovati smart contract na testnet po izboru (Rinkeby, Ropsten, Kovan, Goerli) i verifikovati isti na Etherscanu.
-'''
+*/
 
 
 // SPDX-License-Identifier: MIT

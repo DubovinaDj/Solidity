@@ -1,0 +1,215 @@
+{
+  "contracts": {
+    "DonateAndTakeNFT": "35cdfe1c82f7b90aa6697a6d9c2114bae1905460",
+    "Donation": "a642a856bebd947f15ef2682bcc2645359d4d89a",
+    "OpenZeppelin/openzeppelin-contracts@4.0.0/ERC721": "33e1606cf1eeeaac7cee0118de12a874eaf258d7",
+    "OpenZeppelin/openzeppelin-contracts@4.0.0/Strings": "1ce946f6a4eaa185320328620ccf999b9e86db7c"
+  },
+  "tests": {
+    "tests/uint/test_donation.py": {
+      "coverage": true,
+      "isolated": false,
+      "results": ".......F...",
+      "sha1": "5a6abb3e9247b1d7ff032765ea7b6d0fecf3cd02",
+      "txhash": [
+        "00083e2550712c260ba307ae58874219e6570fa8",
+        "067fecbd8aa9582a411e0872494a88ac38b9cc62",
+        "186c4ea416bf800fcece516a8edd609a794f976e",
+        "22237a3372fc73b8a0d5de9ba1164ec0e54279cc",
+        "2d0de56303851b1322356d28ce0c069f1271c6ae",
+        "303f687bc28d5818c7735cfefb48ae8ef2f3f9a4",
+        "38306eb69accc189e4b4b29d0855174615562ef6",
+        "385f17f0bdebe78f6b3eceac1d39237c245839a1",
+        "3da232f892f2ea74f8a1e5dd10a73929420337d3",
+        "41a0ec0e089eebc1cf682034490660e6c7f0103c",
+        "41e746637eb4a5420bec7575710bc768f321868b",
+        "46196709685b2c8d52efff6b58712057014e42ed",
+        "4904e1d1d5ba2a070bfe1273bc7329d4903f9fb3",
+        "4e20974415db75745b5447392b5bf229d8b5b2a0",
+        "557e75fd81aabf040ce7cd039b2bab5c2cc57445",
+        "56e9c291eb45e88302c2288b35d260a2710e67dc",
+        "5716706f7e73f4336977b86a7d669799a1db25b2",
+        "59ee8878d9ffd658d57480c3d5cabbaaadbb05db",
+        "5ccb6355b8fc5d957d6fd533ebc04aa311d7692f",
+        "6d574085e9d8403a327aff60f2b9047e60df84cf",
+        "7401e642e2b1806c35df5b697e8e15dd1f1eec73",
+        "752c81bd2a88421ed7fedad7bafe008f4f7cc1a1",
+        "7544a34ffb18d364b97bc95f8d6474c4d15e1230",
+        "8449f5abedac8e25410945fa9d6a736b7e6a4673",
+        "86512c04f7a4f2452e559749da167f918de71b8f",
+        "8c9c980cb41128a95294dffd5e184cce77ed886d",
+        "8e1b56bb3cd09cf19aca3b3f490f551468e71162",
+        "9cd6ea4518b4837d3dbcd237dd358127414a69e4",
+        "a3e334a0ec515e416843608b9e5d4484ba861616",
+        "a688f375d1d249c47cff0d729ed15e5c98350eb3",
+        "b398a7c7f35c0de9520c1a8638108cb6924a03c9",
+        "c290c5d4b81d68e0a6f20e7fda231e505da4cff2",
+        "c7778bb87a0212901cc2186eb7bd57a5d6e71033",
+        "d07e41ee1e880d5708510240d0594fdfca47f7cf",
+        "db3348079976665bfaf7593272985a09a805e45a",
+        "e29273960b5d949b472abf8029ac3502d4bff51c",
+        "e30581e1ddb9287133d91d8d70266e745a9d74d9",
+        "eb013a4f0ab1cee9c77fa75d605488fb818fd105",
+        "fc0ce19072190cbfb3f673de2a2f50346c3e4617",
+        "fd7fdc4e8ce715839f748cb75206245de20bd48f",
+        "fe5cf6912454268dca36be3e4517aa8ce0c5f6b3"
+      ]
+    }
+  },
+  "tx": {
+    "00083e2550712c260ba307ae58874219e6570fa8": {},
+    "067fecbd8aa9582a411e0872494a88ac38b9cc62": {},
+    "186c4ea416bf800fcece516a8edd609a794f976e": {},
+    "22237a3372fc73b8a0d5de9ba1164ec0e54279cc": {},
+    "2d0de56303851b1322356d28ce0c069f1271c6ae": {},
+    "303f687bc28d5818c7735cfefb48ae8ef2f3f9a4": {},
+    "38306eb69accc189e4b4b29d0855174615562ef6": {},
+    "385f17f0bdebe78f6b3eceac1d39237c245839a1": {},
+    "3da232f892f2ea74f8a1e5dd10a73929420337d3": {
+      "DonateAndTakeNFT": {
+        "0": [
+          [],
+          [],
+          []
+        ],
+        "1": [
+          [],
+          [],
+          []
+        ],
+        "12": [
+          [],
+          [],
+          []
+        ],
+        "7": [
+          [],
+          [],
+          []
+        ]
+      }
+    },
+    "41a0ec0e089eebc1cf682034490660e6c7f0103c": {},
+    "41e746637eb4a5420bec7575710bc768f321868b": {},
+    "46196709685b2c8d52efff6b58712057014e42ed": {},
+    "4904e1d1d5ba2a070bfe1273bc7329d4903f9fb3": {},
+    "4e20974415db75745b5447392b5bf229d8b5b2a0": {},
+    "557e75fd81aabf040ce7cd039b2bab5c2cc57445": {},
+    "56e9c291eb45e88302c2288b35d260a2710e67dc": {
+      "DonateAndTakeNFT": {
+        "0": [
+          [
+            0
+          ],
+          [],
+          []
+        ],
+        "1": [
+          [],
+          [],
+          []
+        ],
+        "12": [
+          [],
+          [],
+          []
+        ]
+      }
+    },
+    "5716706f7e73f4336977b86a7d669799a1db25b2": {},
+    "59ee8878d9ffd658d57480c3d5cabbaaadbb05db": {},
+    "5ccb6355b8fc5d957d6fd533ebc04aa311d7692f": {},
+    "6d574085e9d8403a327aff60f2b9047e60df84cf": {},
+    "7401e642e2b1806c35df5b697e8e15dd1f1eec73": {},
+    "752c81bd2a88421ed7fedad7bafe008f4f7cc1a1": {},
+    "7544a34ffb18d364b97bc95f8d6474c4d15e1230": {},
+    "8449f5abedac8e25410945fa9d6a736b7e6a4673": {},
+    "86512c04f7a4f2452e559749da167f918de71b8f": {},
+    "8c9c980cb41128a95294dffd5e184cce77ed886d": {},
+    "8e1b56bb3cd09cf19aca3b3f490f551468e71162": {},
+    "9cd6ea4518b4837d3dbcd237dd358127414a69e4": {},
+    "a3e334a0ec515e416843608b9e5d4484ba861616": {},
+    "a688f375d1d249c47cff0d729ed15e5c98350eb3": {},
+    "b398a7c7f35c0de9520c1a8638108cb6924a03c9": {
+      "DonateAndTakeNFT": {
+        "1": [
+          [
+            12,
+            36
+          ],
+          [],
+          []
+        ],
+        "12": [
+          [],
+          [],
+          []
+        ],
+        "7": [
+          [],
+          [],
+          []
+        ]
+      }
+    },
+    "c290c5d4b81d68e0a6f20e7fda231e505da4cff2": {},
+    "c7778bb87a0212901cc2186eb7bd57a5d6e71033": {},
+    "d07e41ee1e880d5708510240d0594fdfca47f7cf": {},
+    "db3348079976665bfaf7593272985a09a805e45a": {},
+    "e29273960b5d949b472abf8029ac3502d4bff51c": {},
+    "e30581e1ddb9287133d91d8d70266e745a9d74d9": {
+      "DonateAndTakeNFT": {
+        "0": [
+          [
+            0
+          ],
+          [],
+          []
+        ],
+        "1": [
+          [],
+          [],
+          []
+        ],
+        "12": [
+          [],
+          [],
+          []
+        ]
+      }
+    },
+    "eb013a4f0ab1cee9c77fa75d605488fb818fd105": {},
+    "fc0ce19072190cbfb3f673de2a2f50346c3e4617": {
+      "DonateAndTakeNFT": {
+        "0": [
+          [
+            31,
+            32,
+            33
+          ],
+          [],
+          [
+            68
+          ]
+        ],
+        "1": [
+          [],
+          [],
+          []
+        ],
+        "12": [
+          [],
+          [],
+          []
+        ],
+        "7": [
+          [],
+          [],
+          []
+        ]
+      }
+    },
+    "fd7fdc4e8ce715839f748cb75206245de20bd48f": {},
+    "fe5cf6912454268dca36be3e4517aa8ce0c5f6b3": {}
+  }
+}

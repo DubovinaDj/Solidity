@@ -93,7 +93,6 @@ describe('Contract Donation tests', async () => {
     });
 
     it('campaign deadline should be greater than block number ', async() => {
-
         await donation.createCampaign('Hmm', 'hmm', 111 + await ethers.provider.getBlockNumber() , 10000);
         const blockNum = await ethers.provider.getBlockNumber();
         const deadline = 111 + await ethers.provider.getBlockNumber();
@@ -149,18 +148,4 @@ describe('Contract Donation tests', async () => {
         expect(await nft.balanceOf(addr1.address)).to.equal(1);
     });
 
-/*
-    it.only('only admin can create campaigns', async () => {
-
-        const [owner, addr1, addr2] = await ethers.getSigners();
-
-        await donation.connect(owner).createCampaign('Hmm', 'hmm', 111, 1111);
-        //const error = await donation.connect(addr1).createCampaign('hjo', 'jo', 111, 1111);
-
-
-        await expect(await donation.connect(addr1).createCampaign('hjo', 'jo', 111, 1111)).to.be.reverted;
-
-
-    });
-*/
 });

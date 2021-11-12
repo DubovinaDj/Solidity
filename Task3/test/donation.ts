@@ -101,7 +101,6 @@ describe('Contract Donation tests', async () => {
         expect(deadline).greaterThan(blockNum)
     });
 
-    //NFT
     it('changes nft owner after transfer', async () => {
         const admin = await accounts[0].getAddress();
         const other = await accounts[1].getAddress();
@@ -116,7 +115,7 @@ describe('Contract Donation tests', async () => {
 
     });
 
-    it('Transfer ownership from address to adress', async () => {
+    it('transfer ownership from address to adress', async () => {
         const [owner, addr1, addr2] = await ethers.getSigners();
 
         await donation.createCampaign('Hmm', 'hmm', 111, 1111);
@@ -125,8 +124,6 @@ describe('Contract Donation tests', async () => {
         await nft.transferFrom(owner.address, addr1.address, 0);
 
         expect(await nft.ownerOf(0)).to.equal(addr1.address);
-
-
     });
 
     it('loses nft owner after renouncement', async () => {
@@ -138,7 +135,7 @@ describe('Contract Donation tests', async () => {
     });
 
     
-    it('Is address owns NFT', async () => {
+    it('is address owns NFT?', async () => {
         const [owner, addr1, addr2] = await ethers.getSigners();
 
         await donation.createCampaign('Hmm', 'hmm', 111, 1111);

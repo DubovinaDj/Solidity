@@ -3,7 +3,6 @@ import { Contract } from '@ethersproject/contracts';
 import { expect } from 'chai';
 import { ethers } from 'hardhat';
 import { Signer } from 'ethers';
-import { SSL_OP_MICROSOFT_SESS_ID_BUG } from 'constants';
 
 
 describe('Tested donation contract', async () => {

@@ -1,19 +1,12 @@
 import { Contract } from '@ethersproject/contracts';
+import { Contract } from '@ethersproject/contracts';
 import { expect } from 'chai';
 import { ethers } from 'hardhat';
-import { MockProvider } from 'ethereum-waffle';
 import { Signer } from 'ethers';
 import { SSL_OP_MICROSOFT_SESS_ID_BUG } from 'constants';
-//import { equal } from 'assert/strict';
 
 
-
-const provider = new MockProvider();
-
-//contract('Donation', function () {
-    //const [ owner, other ] = accounts;
-
-describe('Contract Donation tests', async () => {
+describe('Tested donation contract', async () => {
     let donation: Contract;
     let nft: Contract;
     let accounts: Signer[];
@@ -39,7 +32,7 @@ describe('Contract Donation tests', async () => {
         const other = await accounts[1].getAddress();
         await donation.transferOwnership(other, { from: admin});
 
-        expect(other).to.be.equal(await donation.owner());
+        expect(other).to.equal(await donation.owner());
     });
 
 
@@ -59,7 +52,7 @@ describe('Contract Donation tests', async () => {
         expect(getAddress).to.equal(newAddress);
     });
 
-    it('should be test for campaigns counter', async () => {
+    it('should be tested campaigns counter', async () => {
         await donation.createCampaign('Hmm', 'hmm', 111, 111);
         await donation.createCampaign('Hej', 'hej', 111, 111);
         const counterCampaigns = await donation.Index()
@@ -68,7 +61,7 @@ describe('Contract Donation tests', async () => {
     });
 
     
-    it('test, is campaings complete', async() => {
+    it('should be tested is campaign completed ', async() => {
         const [owner, addr1, addr2] = await ethers.getSigners();
 
         await donation.createCampaign('Hmm', 'hmm', 111, 10000);
@@ -79,28 +72,49 @@ describe('Contract Donation tests', async () => {
         const camp1 = await donation.campaigns(1);
         const camp2 = await donation.campaigns(2);
 
-        expect([ true ]).to.eql(camp1.slice(5))
-        expect([ false ]).to.eql(camp2.slice(5))
+        expect([ true ]).to.eql(camp1.slice(5));
+        expect([ false ]).to.eql(camp2.slice(5));
     });
 
-    it('expected error -> Goal achived', async() => {
+    it('should be tested if campaign goal achieved', async() => {
         const [owner, addr1, addr2] = await ethers.getSigners();
 
         await donation.createCampaign('Hmm', 'hmm', 111, 10000);
         await donation.setNFTAddress(nft.address);
         await donation.connect(addr1).donate(1,{ value: ethers.utils.parseEther("0.01") });
-        await donation.connect(addr2).donate(1,{ value: ethers.utils.parseEther("1") });
+
+        await expect(donation.connect(addr2).donate(1,{ value: ethers.utils.parseEther("1") })).to.be.reverted;
     });
 
-    it('campaign deadline should be greater than block number ', async() => {
+    it('campaign deadline should be greater than block number', async() => {
         await donation.createCampaign('Hmm', 'hmm', 111 + await ethers.provider.getBlockNumber() , 10000);
         const blockNum = await ethers.provider.getBlockNumber();
         const deadline = 111 + await ethers.provider.getBlockNumber();
-        console.log(deadline);
 
-        expect(deadline).greaterThan(blockNum)
+        expect(deadline).greaterThan(blockNum);
     });
 
+    it('only admin can create campaigns', async () => {
+        const [owner, addr1, addr2] = await ethers.getSigners();
+
+        await donation.connect(owner).createCampaign('Hmm', 'hmm', 111, 1111);
+        await expect(donation.connect(addr1).createCampaign('hjo', 'jo', 111, 1111)).to.be.reverted;
+    });
+
+    it('tested if address donated some amount', async () => {
+        const [owner, addr1, addr2] = await ethers.getSigners();
+
+        await donation.createCampaign('Hmm', 'hmm', 111, 10000);
+        await donation.setNFTAddress(nft.address);
+        await donation.connect(addr1).donate(1, { value: ethers.utils.parseEther("0.01") });
+        const address1Donated = await donation.ownerDonated(addr1.address);
+        const address2NotDonated = await donation.ownerDonated(addr2.address);
+
+        expect(true).to.equal(address1Donated);
+        expect(false).to.equal(address2NotDonated);
+    });
+
+    //NFT Contract
     it('changes nft owner after transfer', async () => {
         const admin = await accounts[0].getAddress();
         const other = await accounts[1].getAddress();
@@ -109,13 +123,12 @@ describe('Contract Donation tests', async () => {
         expect(other).to.equal(await nft.owner());
     });
 
-    it('test nft contract owner', async () => {
+    it('tests owner of nft contract ', async () => {
         const admin = await accounts[0].getAddress();
         expect(admin).to.equal(await nft.owner());
-
     });
 
-    it('transfer ownership from address to adress', async () => {
+    it('transfer ownership from address to address', async () => {
         const [owner, addr1, addr2] = await ethers.getSigners();
 
         await donation.createCampaign('Hmm', 'hmm', 111, 1111);
@@ -144,5 +157,4 @@ describe('Contract Donation tests', async () => {
 
         expect(await nft.balanceOf(addr1.address)).to.equal(1);
     });
-
 });

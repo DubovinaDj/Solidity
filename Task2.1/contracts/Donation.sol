@@ -11,15 +11,17 @@ import "./NFT.sol";
 
 contract Donation is Ownable {
     
-    event Deposit( address indexed sender, uint256 amt );
+    event LogDeposit(address sender, uint amt);
+    event LogRefund(address receiver, uint amt);
     
     struct Campaign {
         string campaignName;
         string campaignDesc;
         uint256 campaignGoal;       // in wei
         uint256 campaignDeadline;
-        bool campaignCompleted;
         uint256 campaignRaised;     // in wei
+        bool campaignCompleted;    
+ 
     }
     
     uint256 numCampaigns;
@@ -27,7 +29,8 @@ contract Donation is Ownable {
     
     address private nftAddress;
     mapping (address => bool) donor;
-    
+    mapping(address => uint) balances;
+
     uint campaignRaised = 0;
     bool isCompleted = false;
 
@@ -53,7 +56,7 @@ contract Donation is Ownable {
             */
             
             campaigns[campaignID] = Campaign(
-                  _campaignName, _campaignDesc, _campaignGoal, _campaignDeadline + block.timestamp, isCompleted, campaignRaised);
+                  _campaignName, _campaignDesc, _campaignGoal, _campaignDeadline + block.timestamp, campaignRaised, isCompleted);
         }
 
     /// @notice set address of NFT.sol contract. Only contract owner set address
@@ -79,25 +82,31 @@ contract Donation is Ownable {
     function donatePlease(uint256 _campaignID) public payable {
         Campaign storage camp = campaigns[_campaignID];
         
-        require (block.timestamp < camp.campaignDeadline, "Campaign Failed!");
+        require(block.timestamp < camp.campaignDeadline, "Campaign Failed!");
         require(camp.campaignRaised < camp.campaignGoal,"Goal achieved");
         require(msg.value > 0, 'Donation sholud be greather than zero.');
         
+        balances[msg.sender] += msg.value;
+        emit LogDeposit(msg.sender, msg.value);
+
         camp.campaignRaised = camp.campaignRaised +=  msg.value;
         
         if (camp.campaignRaised >= camp.campaignGoal) {
             camp.campaignCompleted = true;
-            uint256 _amount = camp.campaignRaised - camp.campaignGoal;
-            camp.campaignRaised -= _amount; 
-            payable(msg.sender).call{value: _amount};
+            uint256 _returnAmount = camp.campaignRaised - camp.campaignGoal;
+            camp.campaignRaised -= _returnAmount; 
+
+            require(_returnAmount > 0);
+            balances[msg.sender] -= _returnAmount;
+
+            emit LogRefund(msg.sender, _returnAmount);
+            payable(msg.sender).transfer(_returnAmount);            
         }
         
         if (!donor[msg.sender]){
             donor[msg.sender] = true;
             NFT (nftAddress).mint(msg.sender);
         }
-        
-        emit Deposit(msg.sender, msg.value);
     }
     
     /// @notice check balance of the contract
@@ -108,10 +117,12 @@ contract Donation is Ownable {
     }
 
     /*
-    Donation contract:
-    https://ropsten.etherscan.io/address/0x1ba1218C22767A812cAD8cAC73920Ae6C4e4b14b#code
+    Etherscan Ropsten links:
+
+    Donation contract
+    https://ropsten.etherscan.io/address/0x3cD0E8433dd2BFcdcf5b8B3dFF99165161dD2FBE#code
     
-    NFT contract:
+    NFT contract
     https://ropsten.etherscan.io/address/0xb3Df860886FE1491BFA229EAFBfb903b395CdB62#code
     */
 }

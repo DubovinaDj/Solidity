@@ -6,7 +6,8 @@ import "./NFT.sol";
 
 contract Donation is Ownable {
     
-    event Deposit( address indexed sender, uint256 amt );
+    event LogDeposit(address sender, uint amt);
+    event LogRefund(address receiver, uint amt);
     
     struct Campaign {
         string campaignName;
@@ -23,17 +24,10 @@ contract Donation is Ownable {
     
     address private nftAddress;
     mapping (address => bool) public isDonor;
+    mapping(address => uint) balances;
     
     //uint campaignRaised = 0;
     //bool isCompleted = false;
-    
-    function setNftAddress(address _addr) onlyOwner public {
-        nftAddress = _addr;
-    }
-    
-    function checkNftAddress() view public returns (address) {
-        return nftAddress;
-    }
     
     function newCampaign(
         string memory _campaignName, string memory _campaignDesc, 
@@ -57,29 +51,42 @@ contract Donation is Ownable {
                   _campaignName, _campaignDesc, _campaignGoal, _campaignDeadline + block.timestamp, campaignRaised, isCompleted);
         }
 
+    function setNftAddress(address _addr) onlyOwner public {
+        nftAddress = _addr;
+    }
+    
+    function checkNftAddress() view public returns (address) {
+        return nftAddress;
+    }
+
     function donatePlease(uint256 _campaignID) public payable {
         Campaign storage camp = campaigns[_campaignID];
-        //emit Deposit(msg.sender, msg.value);
-        require (block.timestamp < camp.campaignDeadline, "Campaign Failed!");
+        
+        require(block.timestamp < camp.campaignDeadline, "Campaign Failed!");
         require(camp.campaignRaised < camp.campaignGoal,"Goal achieved");
         require(msg.value > 0, 'Donation sholud be greather than zero.');
         
-        //emit Deposit(msg.sender, msg.value);
+        balances[msg.sender] += msg.value;
+        emit LogDeposit(msg.sender, msg.value);
+
         camp.campaignRaised = camp.campaignRaised +=  msg.value;
         
         if (camp.campaignRaised >= camp.campaignGoal) {
             camp.campaignCompleted = true;
-            uint256 _amount = camp.campaignRaised - camp.campaignGoal;
-            camp.campaignRaised -= _amount; 
-            payable(msg.sender).call{value: _amount};
+            uint256 _returnAmount = camp.campaignRaised - camp.campaignGoal;
+            camp.campaignRaised -= _returnAmount; 
+
+            require(_returnAmount > 0);
+            balances[msg.sender] -= _returnAmount;
+
+            emit LogRefund(msg.sender, _returnAmount);
+            payable(msg.sender).transfer(_returnAmount);            
         }
         
         if (!isDonor[msg.sender]){
             isDonor[msg.sender] = true;
             NFT (nftAddress).mint(msg.sender);
         }
-        
-        emit Deposit(msg.sender, msg.value);
     }
     
     function ContractBalance() public view returns(uint) {

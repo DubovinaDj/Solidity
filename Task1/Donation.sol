@@ -83,7 +83,9 @@ contract Donation is Ownable {
             require(_amountRequested > 0);
             balances[msg.sender] -= _amountRequested;
             emit LogRefund(msg.sender, _amountRequested);
-            payable(msg.sender).transfer(_amountRequested);
+            //payable(msg.sender).transfer(_amountRequested);
+            (bool sent, ) = msg.sender.call{value: _amountRequested}("");
+            require(sent, "Failed to send Ether");
         }
     }
     
